@@ -34,11 +34,14 @@ import org.apache.mahout.math.DenseVector;
 import org.apache.mahout.math.Matrix;
 import org.apache.mahout.math.MatrixSlice;
 import org.apache.mahout.math.SparseRowMatrix;
+import org.apache.mahout.math.Vector;
+import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.math.VectorWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.BitSet;
 import java.util.Random;
 
 public class CVB0PriorMapper extends MapReduceBase implements
@@ -97,17 +100,35 @@ public class CVB0PriorMapper extends MapReduceBase implements
       this.reporter = reporter;
       this.out = out;
     }
+    boolean docTopicPriorGiven = tuple.size() > 1;
     VectorWritable document = (VectorWritable) tuple.get(0);
-    VectorWritable docTopicPrior = tuple.size() > 1
+    VectorWritable docTopicPrior = docTopicPriorGiven
         ? (VectorWritable) tuple.get(1)
         : new VectorWritable(new DenseVector(numTopics).assign(1.0 / numTopics));
 
     TopicModel model = modelTrainer.getReadModel();
     Matrix docTopicModel = new SparseRowMatrix(numTopics, document.get().size(), true);
     // iterate one step on p(topic | doc)
-    model.trainDocTopicModel(document.get(), docTopicPrior.get(), docTopicModel);
+
+    Vector docTopicPriorVector = docTopicPrior.get();
+    BitSet nonZeroes = null;
+    if (docTopicPriorGiven) {
+      nonZeroes = new BitSet(docTopicPriorVector.size());
+      for (Element e : docTopicPriorVector.nonZeroes()) {
+        nonZeroes.set(e.index());
+      }
+    }
+    model.trainDocTopicModel(document.get(), docTopicPriorVector, docTopicModel);
     // update the model
     model.update(docTopicModel);
+    // for "true" L-LDA, we'd zero-out entries in the docTopicPrior vector of which used to be 0
+    // and re-normalize it before emitting it - reference: http://markmail.org/message/cm2a6rnxblj5azuh
+    if(docTopicPriorGiven) {
+      for(int i = 0; (i = nonZeroes.nextClearBit(i)) < nonZeroes.size(); i++) {
+        docTopicPriorVector.setQuick(i, 0D);
+      }
+      docTopicPrior.set(docTopicPriorVector.normalize(1));
+    }
     // emit the updated p(topic | doc)
     multipleOutputs.getCollector(DOCTOPIC_OUT, reporter).collect(docId, docTopicPrior);
   }

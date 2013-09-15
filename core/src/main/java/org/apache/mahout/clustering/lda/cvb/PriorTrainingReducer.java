@@ -31,11 +31,13 @@ import org.apache.mahout.math.DenseVector;
 import org.apache.mahout.math.Matrix;
 import org.apache.mahout.math.MatrixSlice;
 import org.apache.mahout.math.Vector;
+import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.math.VectorWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.BitSet;
 import java.util.Iterator;
 
 public class PriorTrainingReducer extends MapReduceBase
@@ -141,18 +143,22 @@ public class PriorTrainingReducer extends MapReduceBase
         topicVector = v.get();
       }
     }
+    boolean docTopicPriorGiven = topicVector != null;
     if(document == null) {
-      if(topicVector != null) {
+      if(docTopicPriorGiven) {
         reporter.getCounter(Counters.UNUSED_PRIORS).increment(1);
       }
       reporter.getCounter(Counters.SKIPPED_DOC_IDS).increment(1);
       return;
-    } else if(topicVector == null && onlyLabeledDocs) {
-      reporter.getCounter(Counters.SKIPPED_DOC_IDS).increment(1);
-      return;
     } else {
-      if(topicVector == null) {
-        topicVector = new DenseVector(numTopics).assign(1.0 / numTopics);
+      BitSet nonZeroes = null;
+      if(!docTopicPriorGiven) {
+        if(onlyLabeledDocs) {
+          reporter.getCounter(Counters.SKIPPED_DOC_IDS).increment(1);
+          return;
+        } else {
+          topicVector = new DenseVector(numTopics).assign(1.0 / numTopics);
+        }
       } else {
         if(reporter.getCounter(Counters.DOCS_WITH_PRIORS).getCounter() % 100 == 0) {
           long docsWithPriors = reporter.getCounter(Counters.DOCS_WITH_PRIORS).getCounter();
@@ -162,8 +168,20 @@ public class PriorTrainingReducer extends MapReduceBase
               new Object[]{total, docsWithPriors, skippedDocs});
         }
         reporter.getCounter(Counters.DOCS_WITH_PRIORS).increment(1);
+        nonZeroes = new BitSet(topicVector.size());
+        for(Element e : topicVector.nonZeroes()) {
+          nonZeroes.set(e.index());
+        }
       }
       modelTrainer.trainSync(document, topicVector, true, 1);
+      // for "true" L-LDA, we'd zero-out entries in the docTopicPrior vector of which used to be 0
+      // and re-normalize it before emitting it - reference: http://markmail.org/message/cm2a6rnxblj5azuh
+      if(docTopicPriorGiven) {
+        for(int i = 0; (i = nonZeroes.nextClearBit(i)) < nonZeroes.size(); i++) {
+          topicVector.setQuick(i, 0D);
+        }
+        topicVector = topicVector.normalize(1);
+      }
       multipleOutputs.getCollector(DOC_TOPICS, reporter)
                      .collect(docId, new VectorWritable(topicVector));
       reporter.getCounter(Counters.USED_DOCS).increment(1);

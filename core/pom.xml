@@ -30,7 +30,7 @@
   <!-- modules inherit parent's group id and version. -->
   <groupId>com.henry4j.mahout</groupId>
   <artifactId>mahout-core</artifactId>
-  <version>0.8.1</version>
+  <version>0.8.2</version>
   <name>Mahout Core</name>
   <description>Scalable machine learning libraries</description>
 
