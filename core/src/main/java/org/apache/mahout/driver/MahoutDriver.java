@@ -197,6 +197,7 @@ public final class MahoutDriver {
       log.info("Program took {} ms (Minutes: {})", System.currentTimeMillis() - start,
           (System.currentTimeMillis() - start) / 60000.0);
     }
+    System.exit(0); // XXX: due to occasional hangs.
   }
 
   private static boolean isDeprecated(Properties mainClasses, String keyString) {
