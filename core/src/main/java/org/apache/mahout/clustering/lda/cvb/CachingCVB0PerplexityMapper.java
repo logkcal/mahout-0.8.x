@@ -34,15 +34,7 @@ import java.util.Random;
 
 public class CachingCVB0PerplexityMapper extends
     Mapper<IntWritable, VectorWritable, DoubleWritable, DoubleWritable> {
-  /**
-   * Hadoop counters for {@link CachingCVB0PerplexityMapper}, to aid in debugging.
-   */
-  public enum Counters {
-    SAMPLED_DOCUMENTS
-  }
-
   private static final Logger log = LoggerFactory.getLogger(CachingCVB0PerplexityMapper.class);
-
   private ModelTrainer modelTrainer;
   private int maxIters;
   private int numTopics;
@@ -58,22 +50,23 @@ public class CachingCVB0PerplexityMapper extends
 
     log.info("Retrieving configuration");
     Configuration conf = context.getConfiguration();
-    float eta = conf.getFloat(CVB0Driver.TERM_TOPIC_SMOOTHING, Float.NaN);
-    float alpha = conf.getFloat(CVB0Driver.DOC_TOPIC_SMOOTHING, Float.NaN);
-    long seed = conf.getLong(CVB0Driver.RANDOM_SEED, 1234L);
+    CVBConfig config = new CVBConfig().read(conf);
+    float eta = config.getEta();
+    float alpha = config.getAlpha();
+    long seed = config.getRandomSeed();
     random = RandomUtils.getRandom(seed);
-    numTopics = conf.getInt(CVB0Driver.NUM_TOPICS, -1);
-    int numTerms = conf.getInt(CVB0Driver.NUM_TERMS, -1);
-    int numUpdateThreads = conf.getInt(CVB0Driver.NUM_UPDATE_THREADS, 1);
-    int numTrainThreads = conf.getInt(CVB0Driver.NUM_TRAIN_THREADS, 4);
-    maxIters = conf.getInt(CVB0Driver.MAX_ITERATIONS_PER_DOC, 10);
-    float modelWeight = conf.getFloat(CVB0Driver.MODEL_WEIGHT, 1.0f);
-    testFraction = conf.getFloat(CVB0Driver.TEST_SET_FRACTION, 0.1f);
+    numTopics = config.getNumTopics();
+    int numTerms = config.getNumTerms();
+    int numUpdateThreads = config.getNumUpdateThreads();
+    int numTrainThreads = config.getNumTrainThreads();
+    maxIters = config.getMaxItersPerDoc();
+    float modelWeight = config.getModelWeight();
+    testFraction = config.getTestFraction();
 
     log.info("Initializing read model");
     TopicModel readModel;
     Path[] modelPaths = CVB0Driver.getModelPaths(conf);
-    if (modelPaths != null && modelPaths.length > 0) {
+    if(modelPaths != null && modelPaths.length > 0) {
       readModel = new TopicModel(conf, eta, alpha, null, numUpdateThreads, modelWeight, modelPaths);
     } else {
       log.info("No model files found");
@@ -95,11 +88,11 @@ public class CachingCVB0PerplexityMapper extends
 
   @Override
   public void map(IntWritable docId, VectorWritable document, Context context)
-    throws IOException, InterruptedException {
-    if (testFraction < 1.0f && random.nextFloat() >= testFraction) {
+      throws IOException, InterruptedException{
+    if (1 > testFraction && random.nextFloat() >= testFraction) {
       return;
     }
-    context.getCounter(Counters.SAMPLED_DOCUMENTS).increment(1);
+    context.getCounter(CVB0Driver.Counters.SAMPLED_DOCUMENTS).increment(1);
     outKey.set(document.get().norm(1));
     outValue.set(modelTrainer.calculatePerplexity(document.get(), topicVector.assign(1.0 / numTopics), maxIters));
     context.write(outKey, outValue);

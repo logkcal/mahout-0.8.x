@@ -28,7 +28,9 @@
   </parent>
 
   <!-- modules inherit parent's group id and version. -->
+  <groupId>com.henry4j.mahout</groupId>
   <artifactId>mahout-core</artifactId>
+  <version>0.8.1</version>
   <name>Mahout Core</name>
   <description>Scalable machine learning libraries</description>
 
@@ -109,13 +111,15 @@
   
     <!-- our modules -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.apache.mahout</groupId>
       <artifactId>mahout-math</artifactId>
+      <version>0.8</version>
     </dependency>
 
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>org.apache.mahout</groupId>
       <artifactId>mahout-math</artifactId>
+      <version>0.8</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>

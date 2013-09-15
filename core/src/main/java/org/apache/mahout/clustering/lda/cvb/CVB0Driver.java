@@ -28,9 +28,20 @@ import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.mapred.JobClient;
+import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapred.RunningJob;
+import org.apache.hadoop.mapred.lib.MultipleOutputs;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.mahout.common.AbstractJob;
@@ -42,6 +53,7 @@ import org.apache.mahout.common.iterator.sequencefile.PathType;
 import org.apache.mahout.common.iterator.sequencefile.SequenceFileDirIterable;
 import org.apache.mahout.common.mapreduce.VectorSumReducer;
 import org.apache.mahout.math.VectorWritable;
+import org.apache.mahout.vectorizer.SparseVectorsFromSequenceFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,8 +73,7 @@ import java.util.List;
  * <dl>
  * <dt>{@code --input path}</td>
  * <dd>Input path for {@code SequenceFile<IntWritable, VectorWritable>} document vectors. See
- * {@link org.apache.mahout.vectorizer.SparseVectorsFromSequenceFiles}
- *  for details on how to generate this input format.</dd>
+ * {@link SparseVectorsFromSequenceFiles} for details on how to generate this input format.</dd>
  * <dt>{@code --dictionary path}</dt>
  * <dd>Path to dictionary file(s) generated during construction of input document vectors (glob
  * expression supported). If set, this data is scanned to determine an appropriate value for option
@@ -99,106 +110,99 @@ import java.util.List;
  * </dl>
  */
 public class CVB0Driver extends AbstractJob {
+  /**
+   * Hadoop counters for various CVB0 jobs to aid in debugging.
+   */
+  public enum Counters {
+    /**
+     * Number of documents sampled from input set.
+     *
+     * @see CachingCVB0Mapper
+     * @see CachingCVB0PerplexityMapper
+     */
+    SAMPLED_DOCUMENTS
+  }
+
   private static final Logger log = LoggerFactory.getLogger(CVB0Driver.class);
-
-  public static final String NUM_TOPICS = "num_topics";
-  public static final String NUM_TERMS = "num_terms";
-  public static final String DOC_TOPIC_SMOOTHING = "doc_topic_smoothing";
-  public static final String TERM_TOPIC_SMOOTHING = "term_topic_smoothing";
-  public static final String DICTIONARY = "dictionary";
-  public static final String DOC_TOPIC_OUTPUT = "doc_topic_output";
-  public static final String MODEL_TEMP_DIR = "topic_model_temp_dir";
-  public static final String ITERATION_BLOCK_SIZE = "iteration_block_size";
-  public static final String RANDOM_SEED = "random_seed";
-  public static final String TEST_SET_FRACTION = "test_set_fraction";
-  public static final String NUM_TRAIN_THREADS = "num_train_threads";
-  public static final String NUM_UPDATE_THREADS = "num_update_threads";
-  public static final String MAX_ITERATIONS_PER_DOC = "max_doc_topic_iters";
-  public static final String MODEL_WEIGHT = "prev_iter_mult";
-  public static final String NUM_REDUCE_TASKS = "num_reduce_tasks";
-  public static final String BACKFILL_PERPLEXITY = "backfill_perplexity";
   private static final String MODEL_PATHS = "mahout.lda.cvb.modelPath";
-
-  private static final double DEFAULT_CONVERGENCE_DELTA = 0;
-  private static final double DEFAULT_DOC_TOPIC_SMOOTHING = 0.0001;
-  private static final double DEFAULT_TERM_TOPIC_SMOOTHING = 0.0001;
-  private static final int DEFAULT_ITERATION_BLOCK_SIZE = 10;
-  private static final double DEFAULT_TEST_SET_FRACTION = 0;
-  private static final int DEFAULT_NUM_TRAIN_THREADS = 4;
-  private static final int DEFAULT_NUM_UPDATE_THREADS = 1;
-  private static final int DEFAULT_MAX_ITERATIONS_PER_DOC = 10;
-  private static final int DEFAULT_NUM_REDUCE_TASKS = 10;
 
   @Override
   public int run(String[] args) throws Exception {
     addInputOption();
     addOutputOption();
     addOption(DefaultOptionCreator.maxIterationsOption().create());
-    addOption(DefaultOptionCreator.CONVERGENCE_DELTA_OPTION, "cd", "The convergence delta value",
-              String.valueOf(DEFAULT_CONVERGENCE_DELTA));
+    addOption(CVBConfig.CONVERGENCE_DELTA_PARAM, "cd", "The convergence delta value", String.valueOf(CVBConfig.CONVERGENCE_DELTA_DEFAULT));
     addOption(DefaultOptionCreator.overwriteOption().create());
 
-    addOption(NUM_TOPICS, "k", "Number of topics to learn", true);
-    addOption(NUM_TERMS, "nt", "Vocabulary size", false);
-    addOption(DOC_TOPIC_SMOOTHING, "a", "Smoothing for document/topic distribution",
-              String.valueOf(DEFAULT_DOC_TOPIC_SMOOTHING));
-    addOption(TERM_TOPIC_SMOOTHING, "e", "Smoothing for topic/term distribution",
-              String.valueOf(DEFAULT_TERM_TOPIC_SMOOTHING));
-    addOption(DICTIONARY, "dict", "Path to term-dictionary file(s) (glob expression supported)", false);
-    addOption(DOC_TOPIC_OUTPUT, "dt", "Output path for the training doc/topic distribution", false);
-    addOption(MODEL_TEMP_DIR, "mt", "Path to intermediate model path (useful for restarting)", false);
-    addOption(ITERATION_BLOCK_SIZE, "block", "Number of iterations per perplexity check",
-              String.valueOf(DEFAULT_ITERATION_BLOCK_SIZE));
-    addOption(RANDOM_SEED, "seed", "Random seed", false);
-    addOption(TEST_SET_FRACTION, "tf", "Fraction of data to hold out for testing",
-              String.valueOf(DEFAULT_TEST_SET_FRACTION));
-    addOption(NUM_TRAIN_THREADS, "ntt", "number of threads per mapper to train with",
-              String.valueOf(DEFAULT_NUM_TRAIN_THREADS));
-    addOption(NUM_UPDATE_THREADS, "nut", "number of threads per mapper to update the model with",
-              String.valueOf(DEFAULT_NUM_UPDATE_THREADS));
-    addOption(MAX_ITERATIONS_PER_DOC, "mipd", "max number of iterations per doc for p(topic|doc) learning",
-              String.valueOf(DEFAULT_MAX_ITERATIONS_PER_DOC));
-    addOption(NUM_REDUCE_TASKS, null, "number of reducers to use during model estimation",
-              String.valueOf(DEFAULT_NUM_REDUCE_TASKS));
-    addOption(buildOption(BACKFILL_PERPLEXITY, null, "enable backfilling of missing perplexity values", false, false,
-              null));
+    addOption(CVBConfig.NUM_TOPICS_PARAM, "k", "Number of topics to learn", true);
+    addOption(CVBConfig.NUM_TERMS_PARAM, "nt", "Vocabulary size", false);
+    addOption(CVBConfig.DOC_TOPIC_SMOOTHING_PARAM, "a", "Smoothing for document/topic distribution", String.valueOf(CVBConfig.DOC_TOPIC_SMOOTHING_DEFAULT));
+    addOption(CVBConfig.TERM_TOPIC_SMOOTHING_PARAM, "e", "Smoothing for topic/term distribution", String.valueOf(CVBConfig.TERM_TOPIC_SMOOTHING_DEFAULT));
+    addOption(CVBConfig.DICTIONARY_PATH_PARAM, "dict", "Path to term-dictionary file(s) (glob expression supported)", false);
+    addOption(CVBConfig.DOC_TOPIC_OUTPUT_PATH_PARAM, "dt", "Output path for the training doc/topic distribution", false);
+    addOption(CVBConfig.MODEL_TEMP_PATH_PARAM, "mt", "Path to intermediate model path (useful for restarting)", false);
+    addOption(CVBConfig.ITERATION_BLOCK_SIZE_PARAM, "block", "Number of iterations per perplexity check", String.valueOf(CVBConfig.ITERATION_BLOCK_SIZE_DEFAULT));
+    addOption(CVBConfig.RANDOM_SEED_PARAM, "seed", "Random seed", String.valueOf(CVBConfig.RANDOM_SEED_DEFAULT));
+    addOption(CVBConfig.TEST_SET_FRACTION_PARAM, "tf", "Fraction of data to hold out for testing", String.valueOf(CVBConfig.TEST_SET_FRACTION_DEFAULT));
+    addOption(CVBConfig.NUM_TRAIN_THREADS_PARAM, "ntt", "number of threads per mapper to train with", String.valueOf(CVBConfig.NUM_TRAIN_THREADS_DEFAULT));
+    addOption(CVBConfig.NUM_UPDATE_THREADS_PARAM, "nut", "number of threads per mapper to update the model with", String.valueOf(CVBConfig.NUM_UPDATE_THREADS_DEFAULT));
+    addOption(CVBConfig.PERSIST_INTERMEDIATE_DOCTOPICS_PARAM, "pidt", "persist and update intermediate p(topic|doc)", "false");
+    addOption(CVBConfig.DOC_TOPIC_PRIOR_PATH_PARAM, "dtp", "path to prior values of p(topic|doc) matrix");
+    addOption(CVBConfig.MAX_ITERATIONS_PER_DOC_PARAM, "mipd", "max number of iterations per doc for p(topic|doc) learning", String.valueOf(CVBConfig.MAX_ITERATIONS_PER_DOC_DEFAULT));
+    addOption(CVBConfig.MAX_INFERENCE_ITERATIONS_PER_DOC_PARAM, "int", "max number of iterations per doc for p(topic|doc) inference", String.valueOf(CVBConfig.MAX_INFERENCE_ITERATIONS_PER_DOC_DEFAULT));
+    addOption(CVBConfig.NUM_REDUCE_TASKS_PARAM, null, "number of reducers to use during model estimation", String.valueOf(CVBConfig.NUM_REDUCE_TASKS_DEFAULT));
+    addOption(CVBConfig.ONLY_LABELED_DOCS_PARAM, "ol", "only use docs with non-null doc/topic priors", "false");
+    addOption(buildOption(CVBConfig.BACKFILL_PERPLEXITY_PARAM, null, "enable back-filling of missing perplexity values", false, false, null));
 
-    if (parseArguments(args) == null) {
+    if(parseArguments(args) == null) {
       return -1;
     }
 
-    int numTopics = Integer.parseInt(getOption(NUM_TOPICS));
+    int numTopics = Integer.parseInt(getOption(CVBConfig.NUM_TOPICS_PARAM));
     Path inputPath = getInputPath();
     Path topicModelOutputPath = getOutputPath();
     int maxIterations = Integer.parseInt(getOption(DefaultOptionCreator.MAX_ITERATIONS_OPTION));
-    int iterationBlockSize = Integer.parseInt(getOption(ITERATION_BLOCK_SIZE));
-    double convergenceDelta = Double.parseDouble(getOption(DefaultOptionCreator.CONVERGENCE_DELTA_OPTION));
-    double alpha = Double.parseDouble(getOption(DOC_TOPIC_SMOOTHING));
-    double eta = Double.parseDouble(getOption(TERM_TOPIC_SMOOTHING));
-    int numTrainThreads = Integer.parseInt(getOption(NUM_TRAIN_THREADS));
-    int numUpdateThreads = Integer.parseInt(getOption(NUM_UPDATE_THREADS));
-    int maxItersPerDoc = Integer.parseInt(getOption(MAX_ITERATIONS_PER_DOC));
-    Path dictionaryPath = hasOption(DICTIONARY) ? new Path(getOption(DICTIONARY)) : null;
-    int numTerms = hasOption(NUM_TERMS)
-                 ? Integer.parseInt(getOption(NUM_TERMS))
+    int iterationBlockSize = Integer.parseInt(getOption(CVBConfig.ITERATION_BLOCK_SIZE_PARAM));
+    float convergenceDelta = Float.parseFloat(getOption(DefaultOptionCreator.CONVERGENCE_DELTA_OPTION));
+    float alpha = Float.parseFloat(getOption(CVBConfig.DOC_TOPIC_SMOOTHING_PARAM));
+    float eta = Float.parseFloat(getOption(CVBConfig.TERM_TOPIC_SMOOTHING_PARAM));
+    int numTrainThreads = Integer.parseInt(getOption(CVBConfig.NUM_TRAIN_THREADS_PARAM));
+    int numUpdateThreads = Integer.parseInt(getOption(CVBConfig.NUM_UPDATE_THREADS_PARAM));
+    int maxItersPerDoc = Integer.parseInt(getOption(CVBConfig.MAX_ITERATIONS_PER_DOC_PARAM));
+    int maxInferenceItersPerDoc = Integer.parseInt(getOption(CVBConfig.MAX_INFERENCE_ITERATIONS_PER_DOC_PARAM));
+    Path dictionaryPath = hasOption(CVBConfig.DICTIONARY_PATH_PARAM) ? new Path(getOption(CVBConfig.DICTIONARY_PATH_PARAM)) : null;
+    int numTerms = hasOption(CVBConfig.NUM_TERMS_PARAM)
+                 ? Integer.parseInt(getOption(CVBConfig.NUM_TERMS_PARAM))
                  : getNumTerms(getConf(), dictionaryPath);
-    Path docTopicOutputPath = hasOption(DOC_TOPIC_OUTPUT) ? new Path(getOption(DOC_TOPIC_OUTPUT)) : null;
-    Path modelTempPath = hasOption(MODEL_TEMP_DIR)
-                       ? new Path(getOption(MODEL_TEMP_DIR))
+    Path docTopicPriorPath = hasOption(CVBConfig.DOC_TOPIC_PRIOR_PATH_PARAM) ? new Path(getOption(CVBConfig.DOC_TOPIC_PRIOR_PATH_PARAM)) : null;
+    boolean persistDocTopics = hasOption(CVBConfig.PERSIST_INTERMEDIATE_DOCTOPICS_PARAM)
+            && getOption(CVBConfig.PERSIST_INTERMEDIATE_DOCTOPICS_PARAM).equalsIgnoreCase("true");
+    Path docTopicOutputPath = hasOption(CVBConfig.DOC_TOPIC_OUTPUT_PATH_PARAM) ? new Path(getOption(CVBConfig.DOC_TOPIC_OUTPUT_PATH_PARAM)) : null;
+    Path modelTempPath = hasOption(CVBConfig.MODEL_TEMP_PATH_PARAM)
+                       ? new Path(getOption(CVBConfig.MODEL_TEMP_PATH_PARAM))
                        : getTempPath("topicModelState");
-    long seed = hasOption(RANDOM_SEED)
-              ? Long.parseLong(getOption(RANDOM_SEED))
+    long seed = hasOption(CVBConfig.RANDOM_SEED_PARAM)
+              ? Long.parseLong(getOption(CVBConfig.RANDOM_SEED_PARAM))
               : System.nanoTime() % 10000;
-    float testFraction = hasOption(TEST_SET_FRACTION)
-                       ? Float.parseFloat(getOption(TEST_SET_FRACTION))
+    float testFraction = hasOption(CVBConfig.TEST_SET_FRACTION_PARAM)
+                       ? Float.parseFloat(getOption(CVBConfig.TEST_SET_FRACTION_PARAM))
                        : 0.0f;
-    int numReduceTasks = Integer.parseInt(getOption(NUM_REDUCE_TASKS));
-    boolean backfillPerplexity = hasOption(BACKFILL_PERPLEXITY);
-
-    return run(getConf(), inputPath, topicModelOutputPath, numTopics, numTerms, alpha, eta,
-        maxIterations, iterationBlockSize, convergenceDelta, dictionaryPath, docTopicOutputPath,
-        modelTempPath, seed, testFraction, numTrainThreads, numUpdateThreads, maxItersPerDoc,
-        numReduceTasks, backfillPerplexity);
+    int numReduceTasks = Integer.parseInt(getOption(CVBConfig.NUM_REDUCE_TASKS_PARAM));
+    boolean backfillPerplexity = hasOption(CVBConfig.BACKFILL_PERPLEXITY_PARAM);
+    boolean useOnlyLabeledDocs = hasOption(CVBConfig.ONLY_LABELED_DOCS_PARAM); // check!
+    CVBConfig cvbConfig = new CVBConfig().setAlpha(alpha).setEta(eta)
+        .setBackfillPerplexity(backfillPerplexity).setConvergenceDelta(convergenceDelta)
+        .setDictionaryPath(dictionaryPath).setOutputPath(topicModelOutputPath)
+        .setDocTopicOutputPath(docTopicOutputPath)
+        .setDocTopicPriorPath(docTopicPriorPath).setInputPath(inputPath)
+        .setPersistDocTopics(persistDocTopics)
+        .setIterationBlockSize(iterationBlockSize).setMaxIterations(maxIterations)
+        .setMaxItersPerDoc(maxItersPerDoc).setModelTempPath(modelTempPath)
+        .setMaxInferenceItersPerDoc(maxInferenceItersPerDoc)
+        .setNumReduceTasks(numReduceTasks).setNumTrainThreads(numTrainThreads)
+        .setNumUpdateThreads(numUpdateThreads).setNumTerms(numTerms).setNumTopics(numTopics)
+        .setTestFraction(testFraction).setRandomSeed(seed).setUseOnlyLabeledDocs(useOnlyLabeledDocs);
+    return run(getConf(), cvbConfig);
   }
 
   private static int getNumTerms(Configuration conf, Path dictionaryPath) throws IOException {
@@ -215,134 +219,112 @@ public class CVB0Driver extends AbstractJob {
     return maxTermId + 1;
   }
 
-  public int run(Configuration conf,
-                 Path inputPath,
-                 Path topicModelOutputPath,
-                 int numTopics,
-                 int numTerms,
-                 double alpha,
-                 double eta,
-                 int maxIterations,
-                 int iterationBlockSize,
-                 double convergenceDelta,
-                 Path dictionaryPath,
-                 Path docTopicOutputPath,
-                 Path topicModelStateTempPath,
-                 long randomSeed,
-                 float testFraction,
-                 int numTrainThreads,
-                 int numUpdateThreads,
-                 int maxItersPerDoc,
-                 int numReduceTasks,
-                 boolean backfillPerplexity)
-    throws ClassNotFoundException, IOException, InterruptedException {
+   /**
+   *
+    * @param conf
+    * @return
+    * @throws ClassNotFoundException
+   * @throws IOException
+    * @throws InterruptedException
+    */
+   public static int run(Configuration conf, CVBConfig c)
+       throws ClassNotFoundException, IOException, InterruptedException {
+     // verify arguments
+     Preconditions.checkArgument(c.getTestFraction() >= 0.0 && c.getTestFraction() <= 1.0,
+        "Expected 'testFraction' value in range [0, 1] but found value '%s'", c.getTestFraction());
+     Preconditions.checkArgument(!c.isBackfillPerplexity() || c.getTestFraction() > 0.0,
+         "Expected 'testFraction' value in range (0, 1] but found value '%s'", c.getTestFraction());
 
-    setConf(conf);
+      String infoString = "Will run Collapsed Variational Bayes (0th-derivative approximation) " +
+        "learning for LDA on {} (numTerms: {}), finding {}-topics, with document/topic prior {}, " +
+        "topic/term prior {}.  Maximum iterations to run will be {}, unless the change in " +
+        "perplexity is less than {}.  Topic model output (p(term|topic) for each topic) will be " +
+        "stored {}.  Random initialization seed is {}, holding out {} of the data for perplexity " +
+       "check.  {}{}\n";
+     log.info(infoString, new Object[] {c.getInputPath(), c.getNumTerms(), c.getNumTopics(),
+         c.getAlpha(), c.getEta(), c.getMaxIterations(),
+         c.getConvergenceDelta(), c.getOutputPath(), c.getRandomSeed(), c.getTestFraction(),
+         c.isPersistDocTopics() ? "Persisting intermediate p(topic|doc)" : "",
+         c.getDocTopicPriorPath() != null ? "  Using " + c.getDocTopicPriorPath()
+                                            + " as p(topic|doc) prior" : ""});
+     infoString = c.getDictionaryPath() == null
+                ? "" : "Dictionary to be used located " + c.getDictionaryPath().toString() + '\n';
+     infoString += c.getDocTopicOutputPath() == null
+                ? "" : "p(topic|docId) will be stored " + c.getDocTopicOutputPath().toString() + '\n';
+     log.info(infoString);
 
-    // verify arguments
-    Preconditions.checkArgument(testFraction >= 0.0 && testFraction <= 1.0,
-        "Expected 'testFraction' value in range [0, 1] but found value '%s'", testFraction);
-    Preconditions.checkArgument(!backfillPerplexity || testFraction > 0.0,
-        "Expected 'testFraction' value in range (0, 1] but found value '%s'", testFraction);
+     // determine what the "current" iteration is (the iteration for which no data yet exists)
+     int currentIteration = getCurrentIterationNumber(conf, c.getModelTempPath(), c.getMaxIterations());
+     log.info("Current iteration number: {}", currentIteration);
+     c.write(conf);
 
-    String infoString = "Will run Collapsed Variational Bayes (0th-derivative approximation) " 
-      + "learning for LDA on {} (numTerms: {}), finding {}-topics, with document/topic prior {}, " 
-      + "topic/term prior {}.  Maximum iterations to run will be {}, unless the change in " 
-      + "perplexity is less than {}.  Topic model output (p(term|topic) for each topic) will be " 
-      + "stored {}.  Random initialization seed is {}, holding out {} of the data for perplexity " 
-      + "check\n";
-    log.info(infoString, inputPath, numTerms, numTopics, alpha, eta, maxIterations,
-             convergenceDelta, topicModelOutputPath, randomSeed, testFraction);
-    infoString = dictionaryPath == null
-               ? "" : "Dictionary to be used located " + dictionaryPath.toString() + '\n';
-    infoString += docTopicOutputPath == null
-               ? "" : "p(topic|docId) will be stored " + docTopicOutputPath.toString() + '\n';
-    log.info(infoString);
+     // load (and optionally back-fill) perplexity values for previous iterations
+     FileSystem fs = FileSystem.get(c.getModelTempPath().toUri(), conf);
+     List<Double> perplexities = Lists.newArrayList();
+     for (int i = 1; i < currentIteration; i++) {
+       // form path to model
+       Path modelPath = modelPath(c.getModelTempPath(), i);
 
-    FileSystem fs = FileSystem.get(topicModelStateTempPath.toUri(), conf);
-    int iterationNumber = getCurrentIterationNumber(conf, topicModelStateTempPath, maxIterations);
-    log.info("Current iteration number: {}", iterationNumber);
+       // read perplexity
+       double perplexity = readPerplexity(conf, c.getModelTempPath(), i);
+       if (Double.isNaN(perplexity)) {
+         if (!(c.isBackfillPerplexity() && i % c.getIterationBlockSize() == 0)) {
+           continue;
+         }
+         log.info("Backfilling perplexity at iteration {}", i);
+         if (!fs.exists(modelPath)) {
+           log.error("Model path '{}' does not exist; Skipping iteration {} perplexity calculation", modelPath.toString(), i);
+           continue;
+         }
+         perplexity = calculatePerplexity(conf, c.getInputPath(), modelPath, i);
+       }
 
-    conf.set(NUM_TOPICS, String.valueOf(numTopics));
-    conf.set(NUM_TERMS, String.valueOf(numTerms));
-    conf.set(DOC_TOPIC_SMOOTHING, String.valueOf(alpha));
-    conf.set(TERM_TOPIC_SMOOTHING, String.valueOf(eta));
-    conf.set(RANDOM_SEED, String.valueOf(randomSeed));
-    conf.set(NUM_TRAIN_THREADS, String.valueOf(numTrainThreads));
-    conf.set(NUM_UPDATE_THREADS, String.valueOf(numUpdateThreads));
-    conf.set(MAX_ITERATIONS_PER_DOC, String.valueOf(maxItersPerDoc));
-    conf.set(MODEL_WEIGHT, "1"); // TODO
-    conf.set(TEST_SET_FRACTION, String.valueOf(testFraction));
-
-    List<Double> perplexities = Lists.newArrayList();
-    for (int i = 1; i <= iterationNumber; i++) {
-      // form path to model
-      Path modelPath = modelPath(topicModelStateTempPath, i);
-
-      // read perplexity
-      double perplexity = readPerplexity(conf, topicModelStateTempPath, i);
-      if (Double.isNaN(perplexity)) {
-        if (!(backfillPerplexity && i % iterationBlockSize == 0)) {
-          continue;
-        }
-        log.info("Backfilling perplexity at iteration {}", i);
-        if (!fs.exists(modelPath)) {
-          log.error("Model path '{}' does not exist; Skipping iteration {} perplexity calculation",
-              modelPath.toString(), i);
-          continue;
-        }
-        perplexity = calculatePerplexity(conf, inputPath, modelPath, i);
-      }
-
-      // register and log perplexity
-      perplexities.add(perplexity);
-      log.info("Perplexity at iteration {} = {}", i, perplexity);
-    }
+       // register and log perplexity
+       perplexities.add(perplexity);
+       log.info("Perplexity at iteration {} = {}", i, perplexity);
+     }
 
     long startTime = System.currentTimeMillis();
-    while (iterationNumber < maxIterations) {
-      // test convergence
-      if (convergenceDelta > 0.0) {
+    int iterationCount = 0;
+    boolean converged = false;
+    for (; !converged && currentIteration <= c.getMaxIterations(); currentIteration++, iterationCount++) {
+      // run current iteration
+      log.info("About to run iteration {} of {}", currentIteration, c.getMaxIterations());
+      runIteration(conf, c, currentIteration);
+
+      if(c.getTestFraction() > 0 && currentIteration % c.getIterationBlockSize() == 0) {
+        // calculate perplexity
+        Path modelPath = modelPath(c.getModelTempPath(), currentIteration);
+        double perplexity = calculatePerplexity(conf, c.getInputPath(), modelPath, currentIteration);
+        perplexities.add(perplexity);
         double delta = rateOfChange(perplexities);
-        if (delta < convergenceDelta) {
-          log.info("Convergence achieved at iteration {} with perplexity {} and delta {}",
-                   iterationNumber, perplexities.get(perplexities.size() - 1), delta);
-          break;
+        log.info("Current perplexity = {}", perplexity);
+        log.info("(p_curr - p_prev) / p_1 = {}; target = {}", delta, c.getConvergenceDelta());
+
+        // test convergence
+        if (c.getConvergenceDelta() > 0 && delta < c.getConvergenceDelta()) {
+          log.info("Convergence achieved with perplexity {} and delta {}", perplexity, delta);
+          converged = true;
         }
       }
-
-      // update model
-      iterationNumber++;
-      log.info("About to run iteration {} of {}", iterationNumber, maxIterations);
-      Path modelInputPath = modelPath(topicModelStateTempPath, iterationNumber - 1);
-      Path modelOutputPath = modelPath(topicModelStateTempPath, iterationNumber);
-      runIteration(conf, inputPath, modelInputPath, modelOutputPath, iterationNumber,
-          maxIterations, numReduceTasks);
-
-      // calculate perplexity
-      if (testFraction > 0 && iterationNumber % iterationBlockSize == 0) {
-        perplexities.add(calculatePerplexity(conf, inputPath, modelOutputPath, iterationNumber));
-        log.info("Current perplexity = {}", perplexities.get(perplexities.size() - 1));
-        log.info("(p_{} - p_{}) / p_0 = {}; target = {}", iterationNumber, iterationNumber - iterationBlockSize,
-            rateOfChange(perplexities), convergenceDelta);
-      }
     }
-    log.info("Completed {} iterations in {} seconds", iterationNumber,
-        (System.currentTimeMillis() - startTime) / 1000);
+    long endTime = System.currentTimeMillis();
+    log.info("Completed {} iterations in {} seconds", iterationCount, (endTime - startTime) / 1000);
     log.info("Perplexities: ({})", Joiner.on(", ").join(perplexities));
 
     // write final topic-term and doc-topic distributions
-    Path finalIterationData = modelPath(topicModelStateTempPath, iterationNumber);
-    Job topicModelOutputJob = topicModelOutputPath != null
-        ? writeTopicModel(conf, finalIterationData, topicModelOutputPath)
+    int finalIteration = currentIteration - 1;
+    Path finalIterationData = modelPath(c.getModelTempPath(), finalIteration);
+    Job topicModelOutputJob = c.getOutputPath() != null
+        ? writeTopicModel(conf, finalIterationData, c.getOutputPath())
         : null;
-    Job docInferenceJob = docTopicOutputPath != null
-        ? writeDocTopicInference(conf, inputPath, finalIterationData, docTopicOutputPath)
+    Job docInferenceJob = c.getDocTopicOutputPath() != null
+        ? writeDocTopicInference(conf, c.getInputPath(), finalIterationData, c.getDocTopicOutputPath())
         : null;
-    if (topicModelOutputJob != null && !topicModelOutputJob.waitForCompletion(true)) {
+    if(topicModelOutputJob != null && !topicModelOutputJob.waitForCompletion(true)) {
       return -1;
     }
-    if (docInferenceJob != null && !docInferenceJob.waitForCompletion(true)) {
+    if(docInferenceJob != null && !docInferenceJob.waitForCompletion(true)) {
       return -1;
     }
     return 0;
@@ -350,27 +332,33 @@ public class CVB0Driver extends AbstractJob {
 
   private static double rateOfChange(List<Double> perplexities) {
     int sz = perplexities.size();
-    if (sz < 2) {
+    if(sz < 2) {
       return Double.MAX_VALUE;
     }
     return Math.abs(perplexities.get(sz - 1) - perplexities.get(sz - 2)) / perplexities.get(0);
   }
 
-  private double calculatePerplexity(Configuration conf, Path corpusPath, Path modelPath, int iteration)
-    throws IOException, ClassNotFoundException, InterruptedException {
+  private static double calculatePerplexity(Configuration conf, Path corpusPath, Path modelPath, int iteration)
+      throws IOException,
+      ClassNotFoundException, InterruptedException {
     String jobName = "Calculating perplexity for " + modelPath;
-    log.info("About to run: {}", jobName);
-
-    Path outputPath = perplexityPath(modelPath.getParent(), iteration);
-    Job job = prepareJob(corpusPath, outputPath, CachingCVB0PerplexityMapper.class, DoubleWritable.class,
-        DoubleWritable.class, DualDoubleSumReducer.class, DoubleWritable.class, DoubleWritable.class);
-
-    job.setJobName(jobName);
+    log.info("About to run: " + jobName);
+    Job job = new Job(conf, jobName);
+    job.setJarByClass(CachingCVB0PerplexityMapper.class);
+    job.setMapperClass(CachingCVB0PerplexityMapper.class);
     job.setCombinerClass(DualDoubleSumReducer.class);
+    job.setReducerClass(DualDoubleSumReducer.class);
     job.setNumReduceTasks(1);
-    setModelPaths(job, modelPath);
+    job.setOutputKeyClass(DoubleWritable.class);
+    job.setOutputValueClass(DoubleWritable.class);
+    job.setInputFormatClass(SequenceFileInputFormat.class);
+    job.setOutputFormatClass(SequenceFileOutputFormat.class);
+    FileInputFormat.addInputPath(job, corpusPath);
+    Path outputPath = perplexityPath(modelPath.getParent(), iteration);
+    FileOutputFormat.setOutputPath(job, outputPath);
+    setModelPaths(job.getConfiguration(), modelPath);
     HadoopUtil.delete(conf, outputPath);
-    if (!job.waitForCompletion(true)) {
+    if(!job.waitForCompletion(true)) {
       throw new InterruptedException("Failed to calculate perplexity for: " + modelPath);
     }
     return readPerplexity(conf, modelPath.getParent(), iteration);
@@ -410,9 +398,9 @@ public class CVB0Driver extends AbstractJob {
    * @throws IOException
    */
   public static double readPerplexity(Configuration conf, Path topicModelStateTemp, int iteration)
-    throws IOException {
+      throws IOException {
+    FileSystem fs = FileSystem.get(topicModelStateTemp.toUri(), conf);
     Path perplexityPath = perplexityPath(topicModelStateTemp, iteration);
-    FileSystem fs = FileSystem.get(perplexityPath.toUri(), conf);
     if (!fs.exists(perplexityPath)) {
       log.warn("Perplexity path {} does not exist, returning NaN", perplexityPath);
       return Double.NaN;
@@ -426,40 +414,54 @@ public class CVB0Driver extends AbstractJob {
       perplexity += pair.getSecond().get();
       n++;
     }
-    log.info("Read {} entries with total perplexity {} and model weight {}", n,
-             perplexity, modelWeight);
+    log.info("Read {} entries with total perplexity {} and model weight {}", new Object[] { n,
+            perplexity, modelWeight });
     return perplexity / modelWeight;
   }
 
-  private Job writeTopicModel(Configuration conf, Path modelInput, Path output)
-    throws IOException, InterruptedException, ClassNotFoundException {
-    String jobName = String.format("Writing final topic/term distributions from %s to %s", modelInput, output);
-    log.info("About to run: {}", jobName);
-
-    Job job = prepareJob(modelInput, output, SequenceFileInputFormat.class, CVB0TopicTermVectorNormalizerMapper.class,
-        IntWritable.class, VectorWritable.class, SequenceFileOutputFormat.class, jobName);
+  private static Job writeTopicModel(Configuration conf, Path modelInput, Path output) throws IOException,
+      InterruptedException, ClassNotFoundException {
+    String jobName = String.format("Writing final topic/term distributions from %s to %s", modelInput,
+        output);
+    log.info("About to run: " + jobName);
+    Job job = new Job(conf, jobName);
+    job.setJarByClass(CVB0Driver.class);
+    job.setInputFormatClass(SequenceFileInputFormat.class);
+    job.setMapperClass(CVB0TopicTermVectorNormalizerMapper.class);
+    job.setNumReduceTasks(0);
+    job.setOutputKeyClass(IntWritable.class);
+    job.setOutputValueClass(VectorWritable.class);
+    job.setOutputFormatClass(SequenceFileOutputFormat.class);
+    FileInputFormat.addInputPath(job, modelInput);
+    FileOutputFormat.setOutputPath(job, output);
     job.submit();
     return job;
   }
 
-  private Job writeDocTopicInference(Configuration conf, Path corpus, Path modelInput, Path output)
-    throws IOException, ClassNotFoundException, InterruptedException {
-    String jobName = String.format("Writing final document/topic inference from %s to %s", corpus, output);
-    log.info("About to run: {}", jobName);
-
-    Job job = prepareJob(corpus, output, SequenceFileInputFormat.class, CVB0DocInferenceMapper.class,
-        IntWritable.class, VectorWritable.class, SequenceFileOutputFormat.class, jobName);
-
-    FileSystem fs = FileSystem.get(corpus.toUri(), conf);
+  private static Job writeDocTopicInference(Configuration conf, Path corpus, Path modelInput, Path output)
+      throws IOException, ClassNotFoundException, InterruptedException {
+    String jobName = String.format("Writing final document/topic inference from %s to %s", corpus,
+        output);
+    log.info("About to run: " + jobName);
+    Job job = new Job(conf, jobName);
+    job.setMapperClass(CVB0DocInferenceMapper.class);
+    job.setNumReduceTasks(0);
+    job.setInputFormatClass(SequenceFileInputFormat.class);
+    job.setOutputFormatClass(SequenceFileOutputFormat.class);
+    job.setOutputKeyClass(IntWritable.class);
+    job.setOutputValueClass(VectorWritable.class);
+    FileSystem fs = FileSystem.get(modelInput.toUri(), conf);
     if (modelInput != null && fs.exists(modelInput)) {
       FileStatus[] statuses = fs.listStatus(modelInput, PathFilters.partFilter());
       URI[] modelUris = new URI[statuses.length];
-      for (int i = 0; i < statuses.length; i++) {
+      for(int i = 0; i < statuses.length; i++) {
         modelUris[i] = statuses[i].getPath().toUri();
       }
       DistributedCache.setCacheFiles(modelUris, conf);
-      setModelPaths(job, modelInput);
     }
+    FileInputFormat.addInputPath(job, corpus);
+    FileOutputFormat.setOutputPath(job, output);
+    job.setJarByClass(CVB0Driver.class);
     job.submit();
     return job;
   }
@@ -468,54 +470,210 @@ public class CVB0Driver extends AbstractJob {
     return new Path(topicModelStateTempPath, "model-" + iterationNumber);
   }
 
+  public static Path stage1OutputPath(Path topicModelStateTempPath, int iterationNumber) {
+    return new Path(topicModelStateTempPath, "tmp-" + iterationNumber);
+  }
+
   public static Path perplexityPath(Path topicModelStateTempPath, int iterationNumber) {
     return new Path(topicModelStateTempPath, "perplexity-" + iterationNumber);
   }
 
-  private static int getCurrentIterationNumber(Configuration config, Path modelTempDir, int maxIterations)
-    throws IOException {
-    FileSystem fs = FileSystem.get(modelTempDir.toUri(), config);
+  /**
+   * Scans model state path for existing models, returning the number of the
+   * iteration for which no data yet exists. For example, when no model data for
+   * any iteration is found, this function will return 1.
+   *
+   * @param conf
+   *          job configuration.
+   * @param modelTempDir
+   *          path to model state.
+   * @param maxIterations
+   *          max number of iterations to look for.
+   * @return the one-based number of the "current" iteration. If no results
+   *         exist, this function will return 1.
+   * @throws IOException
+   */
+  private static int getCurrentIterationNumber(Configuration conf, Path modelTempDir, int maxIterations)
+      throws IOException {
+    log.info("Scanning path '{}' for existing data", modelTempDir);
+    FileSystem fs = FileSystem.get(modelTempDir.toUri(), conf);
     int iterationNumber = 1;
     Path iterationPath = modelPath(modelTempDir, iterationNumber);
-    while (fs.exists(iterationPath) && iterationNumber <= maxIterations) {
-      log.info("Found previous state: {}", iterationPath);
+    while(fs.exists(iterationPath) && iterationNumber <= maxIterations) {
+      log.info("Found previous state '{}'", iterationPath);
       iterationNumber++;
       iterationPath = modelPath(modelTempDir, iterationNumber);
     }
-    return iterationNumber - 1;
+    return iterationNumber;
   }
 
-  public void runIteration(Configuration conf, Path corpusInput, Path modelInput, Path modelOutput,
-                           int iterationNumber, int maxIterations, int numReduceTasks)
-    throws IOException, ClassNotFoundException, InterruptedException {
-    String jobName = String.format("Iteration %d of %d, input path: %s",
-        iterationNumber, maxIterations, modelInput);
-    log.info("About to run: {}", jobName);
-    Job job = prepareJob(corpusInput, modelOutput, CachingCVB0Mapper.class, IntWritable.class, VectorWritable.class,
-        VectorSumReducer.class, IntWritable.class, VectorWritable.class);
-    job.setCombinerClass(VectorSumReducer.class);
-    job.setNumReduceTasks(numReduceTasks);
-    job.setJobName(jobName);
-    setModelPaths(job, modelInput);
-    HadoopUtil.delete(conf, modelOutput);
-    if (!job.waitForCompletion(true)) {
-      throw new InterruptedException(String.format("Failed to complete iteration %d stage 1",
-          iterationNumber));
+  public static void runIteration(Configuration conf, CVBConfig c, int iterationNumber) throws IOException,
+      ClassNotFoundException, InterruptedException {
+    if(c.isPersistDocTopics() || c.getDocTopicPriorPath() != null) {
+      runIterationWithDocTopicPriors(conf, c, iterationNumber);
+    } else {
+      runIterationNoPriors(conf, c, iterationNumber);
     }
   }
 
-  private static void setModelPaths(Job job, Path modelPath) throws IOException {
-    Configuration conf = job.getConfiguration();
-    if (modelPath == null || !FileSystem.get(modelPath.toUri(), conf).exists(modelPath)) {
+  /**
+   *      IdMap[corpus, docTopics_i]
+   *   ->
+   *      PriorRed[corpus, docTopics_i; model_i]
+   *   --multiOut-->
+   *      model_frag_i+1
+   *      docTopics_i+1
+   *
+   *     IdMap[model_frag_i+1]
+   *   -->
+   *     VectSumRed[model_frag_i+1]
+   *   -->
+   *     model_i+1
+   *
+   * @param conf the basic configuration
+   * @param currentIteration
+   * @throws IOException
+   * @throws ClassNotFoundException
+   * @throws InterruptedException
+   */
+  public static void runIterationWithDocTopicPriors(Configuration conf, CVBConfig c,
+      final int currentIteration)
+      throws IOException, ClassNotFoundException, InterruptedException {
+    // define IO paths
+    final int previousIteration = currentIteration - 1;
+    final Path inputModelPath = modelPath(c.getModelTempPath(), previousIteration);
+    final Path intermediateModelPath = getIntermediateModelPath(currentIteration, c.getModelTempPath());
+    final Path intermediateTopicTermPath = getIntermediateTopicTermPath(currentIteration, c.getModelTempPath());
+    final Path outputModelPath = modelPath(c.getModelTempPath(), currentIteration);
+    Path docTopicInput;
+    if(c.getDocTopicPriorPath() == null || (c.isPersistDocTopics() && currentIteration > 1)) {
+      docTopicInput = getDocTopicPath(previousIteration, c.getModelTempPath());
+    } else {
+      docTopicInput = c.getDocTopicPriorPath();
+    }
+
+    // create and configure part 1 job
+    String jobName1 = String.format("Part 1 of iteration %d of %d, input corpus %s, doc-topics: %s",
+        currentIteration, c.getMaxIterations(), c.getInputPath(), docTopicInput);
+    // TODO(Jake Mannix): is this really the ctor you want?
+    JobConf jobConf1 = new JobConf(conf, CVB0Driver.class);
+    jobConf1.setJobName(jobName1);
+    jobConf1.setJarByClass(CVB0Driver.class);
+    jobConf1.setMapperClass(Id.class);
+    jobConf1.setClass("mapred.input.key.class", IntWritable.class, WritableComparable.class);
+    jobConf1.setClass("mapred.input.value.class", VectorWritable.class, Writable.class);
+    jobConf1.setMapOutputKeyClass(IntWritable.class);
+    jobConf1.setMapOutputValueClass(VectorWritable.class);
+    jobConf1.setReducerClass(PriorTrainingReducer.class);
+    jobConf1.setNumReduceTasks(c.getNumReduceTasks());
+    // configure job input
+    jobConf1.setInputFormat(org.apache.hadoop.mapred.SequenceFileInputFormat.class);
+    setModelPaths(jobConf1, inputModelPath);
+    org.apache.hadoop.mapred.FileInputFormat.addInputPath(jobConf1, c.getInputPath());
+    if(FileSystem.get(docTopicInput.toUri(), conf).globStatus(docTopicInput).length > 0) {
+      org.apache.hadoop.mapred.FileInputFormat.addInputPath(jobConf1, docTopicInput);
+    }
+    // configure job output
+    MultipleOutputs.addNamedOutput(jobConf1, PriorTrainingReducer.DOC_TOPICS,
+        org.apache.hadoop.mapred.SequenceFileOutputFormat.class, IntWritable.class, VectorWritable.class);
+    MultipleOutputs.addNamedOutput(jobConf1, PriorTrainingReducer.TOPIC_TERMS,
+        org.apache.hadoop.mapred.SequenceFileOutputFormat.class, IntWritable.class, VectorWritable.class);
+    org.apache.hadoop.mapred.FileOutputFormat.setOutputPath(jobConf1, intermediateModelPath);
+    // remove any existing output and invoke part 1 job
+    log.info("About to run: " + jobName1);
+    HadoopUtil.delete(conf, intermediateModelPath);
+    RunningJob runningJob = JobClient.runJob(jobConf1);
+    if(!runningJob.isComplete()) {
+      throw new InterruptedException(String.format("Failed to complete iteration %d stage 1",
+          currentIteration));
+    }
+
+    // create and configure part 2 job
+    String jobName2 = String.format("Part 2 of iteration %d of %d, input model fragments %s," +
+        " output model state: %s", currentIteration, c.getMaxIterations(),
+        intermediateTopicTermPath, outputModelPath);
+    c.write(conf);
+    Job job2 = new Job(conf, jobName2);
+    job2.setJarByClass(CVB0Driver.class);
+    job2.setMapperClass(Mapper.class);
+    job2.setCombinerClass(VectorSumReducer.class);
+    job2.setReducerClass(VectorSumReducer.class);
+    job2.setNumReduceTasks(c.getNumReduceTasks());
+    job2.setOutputKeyClass(IntWritable.class);
+    job2.setOutputValueClass(VectorWritable.class);
+    // configure job input
+    job2.setInputFormatClass(SequenceFileInputFormat.class);
+    FileInputFormat.addInputPath(job2, intermediateTopicTermPath);
+    // configure job output
+    job2.setOutputFormatClass(SequenceFileOutputFormat.class);
+    FileOutputFormat.setOutputPath(job2, outputModelPath);
+    // remove any existing output and invoke part 2 job
+    log.info("About to run: " + jobName2);
+    HadoopUtil.delete(conf, outputModelPath);
+    if(!job2.waitForCompletion(true)) {
+      throw new InterruptedException(String.format("Failed to complete iteration %d stage 2",
+          currentIteration));
+    }
+  }
+
+  public static void runIterationNoPriors(Configuration conf, CVBConfig c, int currentIteration)
+      throws IOException, ClassNotFoundException, InterruptedException {
+    final int previousIteration = currentIteration - 1;
+    final Path modelInput = modelPath(c.getModelTempPath(), previousIteration);
+    final Path modelOutput = modelPath(c.getModelTempPath(), currentIteration);
+    String jobName = String.format("Iteration %d of %d, input model path: %s",
+        currentIteration, c.getMaxIterations(), modelInput);
+    Job job = new Job(conf, jobName);
+    job.setJarByClass(CVB0Driver.class);
+    job.setMapperClass(CachingCVB0Mapper.class);
+    job.setCombinerClass(VectorSumReducer.class);
+    job.setReducerClass(VectorSumReducer.class);
+    job.setNumReduceTasks(c.getNumReduceTasks());
+    job.setOutputKeyClass(IntWritable.class);
+    job.setOutputValueClass(VectorWritable.class);
+    // configure job input
+    job.setInputFormatClass(SequenceFileInputFormat.class);
+    FileInputFormat.addInputPath(job, c.getInputPath());
+    setModelPaths(job.getConfiguration(), modelInput);
+    // configure job output
+    job.setOutputFormatClass(SequenceFileOutputFormat.class);
+    FileOutputFormat.setOutputPath(job, modelOutput);
+    // remove existing output and invoke job
+    log.info("About to run: " + jobName);
+    HadoopUtil.delete(conf, modelOutput);
+    if(!job.waitForCompletion(true)) {
+      throw new InterruptedException(String.format("Failed to complete iteration %d stage 1",
+          currentIteration));
+    }
+  }
+
+  private static void setModelPaths(Configuration conf, Path modelPath) throws IOException {
+    if (modelPath == null) {
       return;
     }
-    FileStatus[] statuses = FileSystem.get(modelPath.toUri(), conf).listStatus(modelPath, PathFilters.partFilter());
+    FileSystem fs = FileSystem.get(modelPath.toUri(), conf);
+    if (!fs.exists(modelPath)) {
+      return;
+    }
+    FileStatus[] statuses = fs.listStatus(modelPath, PathFilters.partFilter());
     Preconditions.checkState(statuses.length > 0, "No part files found in model path '%s'", modelPath.toString());
     String[] modelPaths = new String[statuses.length];
     for (int i = 0; i < statuses.length; i++) {
       modelPaths[i] = statuses[i].getPath().toUri().toString();
     }
     conf.setStrings(MODEL_PATHS, modelPaths);
+  }
+
+  public static Path getIntermediateModelPath(int iterationNumber, Path topicModelStateTempPath) {
+    return new Path(topicModelStateTempPath, "model-tmp-" + iterationNumber);
+  }
+
+  public static Path getDocTopicPath(int interationNumber, Path topicModelStateTempPath) {
+    return new Path(getIntermediateModelPath(interationNumber, topicModelStateTempPath), "docTopics-*");
+  }
+
+  public static Path getIntermediateTopicTermPath(int iterationNumber, Path topicModelStateTempPath) {
+    return new Path(getIntermediateModelPath(iterationNumber, topicModelStateTempPath), "topicTerms-*");
   }
 
   public static Path[] getModelPaths(Configuration conf) {
@@ -532,5 +690,22 @@ public class CVB0Driver extends AbstractJob {
 
   public static void main(String[] args) throws Exception {
     ToolRunner.run(new Configuration(), new CVB0Driver(), args);
+  }
+
+  public static final class Id implements
+      org.apache.hadoop.mapred.Mapper<IntWritable, VectorWritable, IntWritable, VectorWritable> {
+
+    @Override public void map(IntWritable k, VectorWritable v,
+        OutputCollector<IntWritable, VectorWritable> out, Reporter reporter) throws IOException {
+      out.collect(k, v);
+    }
+
+    @Override public void close() throws IOException {
+      // do nothing
+    }
+
+    @Override public void configure(JobConf jobConf) {
+      // do nothing
+    }
   }
 }

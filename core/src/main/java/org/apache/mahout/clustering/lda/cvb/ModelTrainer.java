@@ -96,13 +96,12 @@ public class ModelTrainer {
   }
 
   public void start() {
-    log.info("Starting training threadpool with {} threads", numTrainThreads);
+    log.info("Starting training threadpool with " + numTrainThreads + " threads");
     workQueue = new ArrayBlockingQueue<Runnable>(numTrainThreads * 10);
     threadPool = new ThreadPoolExecutor(numTrainThreads, numTrainThreads, 0, TimeUnit.SECONDS,
         workQueue);
     threadPool.allowCoreThreadTimeOut(false);
     threadPool.prestartAllCoreThreads();
-    writeModel.reset();
   }
 
   public void train(VectorIterable matrix, VectorIterable docTopicCounts) {
@@ -119,13 +118,13 @@ public class ModelTrainer {
     Iterator<MatrixSlice> docTopicIterator = docTopicCounts.iterator();
     double perplexity = 0;
     double matrixNorm = 0;
-    while (docIterator.hasNext() && docTopicIterator.hasNext()) {
+    while(docIterator.hasNext() && docTopicIterator.hasNext()) {
       MatrixSlice docSlice = docIterator.next();
       MatrixSlice topicSlice = docTopicIterator.next();
       int docId = docSlice.index();
       Vector document = docSlice.vector();
       Vector topicDist = topicSlice.vector();
-      if (testFraction == 0 || docId % (1 / testFraction) == 0) {
+      if(testFraction == 0 || docId % (1/testFraction) == 0) {
         trainSync(document, topicDist, false, 10);
         perplexity += readModel.perplexity(document, topicDist);
         matrixNorm += document.norm(1);
@@ -144,36 +143,36 @@ public class ModelTrainer {
     Map<Vector, Vector> batch = Maps.newHashMap();
     int numTokensInBatch = 0;
     long batchStart = System.nanoTime();
-    while (docIterator.hasNext() && docTopicIterator.hasNext()) {
+    while(docIterator.hasNext() && docTopicIterator.hasNext()) {
       i++;
       Vector document = docIterator.next().vector();
       Vector topicDist = docTopicIterator.next().vector();
-      if (isReadWrite) {
-        if (batch.size() < numTrainThreads) {
+      if(isReadWrite) {
+        if(batch.size() < numTrainThreads) {
           batch.put(document, topicDist);
-          if (log.isDebugEnabled()) {
+          if(log.isDebugEnabled()) {
             numTokensInBatch += document.getNumNondefaultElements();
           }
         } else {
           batchTrain(batch, true, numDocTopicIters);
           long time = System.nanoTime();
           log.debug("trained {} docs with {} tokens, start time {}, end time {}",
-                    numTrainThreads, numTokensInBatch, batchStart, time);
+              new Object[] {numTrainThreads, numTokensInBatch, batchStart, time});
           batchStart = time;
           numTokensInBatch = 0;
         }
       } else {
         long start = System.nanoTime();
         train(document, topicDist, true, numDocTopicIters);
-        if (log.isDebugEnabled()) {
+        if(log.isDebugEnabled()) {
           times[i % times.length] =
-              (System.nanoTime() - start) / (1.0e6 * document.getNumNondefaultElements());
-          if (i % 100 == 0) {
+              (System.nanoTime() - start) /(1.0e6 * document.getNumNondefaultElements());
+          if(i % 100 == 0) {
             long time = System.nanoTime() - startTime;
-            log.debug("trained {} documents in {}ms", i, time / 1.0e6);
-            if (i % 500 == 0) {
+            log.debug("trained " + i + " documents in " + (time / 1.0e6) + "ms");
+            if(i % 500 == 0) {
               Arrays.sort(times);
-              log.debug("training took median {}ms per token-instance", times[times.length / 2]);
+              log.debug("training took median " + times[times.length / 2] + "ms per token-instance");
             }
           }
         }
@@ -183,17 +182,17 @@ public class ModelTrainer {
   }
 
   public void batchTrain(Map<Vector, Vector> batch, boolean update, int numDocTopicsIters) {
-    while (true) {
+    while(true) {
       try {
         List<TrainerRunnable> runnables = Lists.newArrayList();
-        for (Map.Entry<Vector, Vector> entry : batch.entrySet()) {
+        for(Map.Entry<Vector, Vector> entry : batch.entrySet()) {
           runnables.add(new TrainerRunnable(readModel, null, entry.getKey(),
               entry.getValue(), new SparseRowMatrix(numTopics, numTerms, true),
               numDocTopicsIters));
         }
         threadPool.invokeAll(runnables);
-        if (update) {
-          for (TrainerRunnable runnable : runnables) {
+        if(update) {
+          for(TrainerRunnable runnable : runnables) {
             writeModel.update(runnable.docTopicModel);
           }
         }
@@ -205,28 +204,29 @@ public class ModelTrainer {
   }
 
   public void train(Vector document, Vector docTopicCounts, boolean update, int numDocTopicIters) {
-    while (true) {
+    while(true) {
       try {
-        workQueue.put(new TrainerRunnable(readModel, update
-            ? writeModel
-            : null, document, docTopicCounts, new SparseRowMatrix(numTopics, numTerms, true), numDocTopicIters));
+        workQueue.put(new TrainerRunnable(readModel,
+            update ? writeModel : null, document, docTopicCounts, new SparseRowMatrix(
+            numTopics, numTerms, true), numDocTopicIters));
         return;
       } catch (InterruptedException e) {
-        log.warn("Interrupted waiting to submit document to work queue: {}", document, e);
+        log.warn("Interrupted waiting to submit document to work queue: " + document, e);
       }
     }
   }
 
   public void trainSync(Vector document, Vector docTopicCounts, boolean update,
       int numDocTopicIters) {
-    new TrainerRunnable(readModel, update
-        ? writeModel
-        : null, document, docTopicCounts, new SparseRowMatrix(numTopics, numTerms, true), numDocTopicIters).run();
+    new TrainerRunnable(readModel,
+            update ? writeModel : null, document, docTopicCounts, new SparseRowMatrix(
+            numTopics, numTerms, true), numDocTopicIters).run();
   }
 
   public double calculatePerplexity(Vector document, Vector docTopicCounts, int numDocTopicIters) {
-    TrainerRunnable runner =  new TrainerRunnable(readModel, null, document, docTopicCounts,
-        new SparseRowMatrix(numTopics, numTerms, true), numDocTopicIters);
+    TrainerRunnable runner =  new TrainerRunnable(readModel,
+            null, document, docTopicCounts, new SparseRowMatrix(
+            numTopics, numTerms, true), numDocTopicIters);
     return runner.call();
   }
 
@@ -235,22 +235,19 @@ public class ModelTrainer {
     log.info("Initiating stopping of training threadpool");
     try {
       threadPool.shutdown();
-      if (!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
+      if(!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
         log.warn("Threadpool timed out on await termination - jobs still running!");
       }
       long newTime = System.nanoTime();
-      log.info("threadpool took: {}ms", (newTime - startTime) / 1.0e6);
+      log.info("threadpool took: " + (newTime - startTime) / 1.0e6 + "ms");
       startTime = newTime;
-      readModel.stop();
+      writeModel.awaitTermination();
       newTime = System.nanoTime();
-      log.info("readModel.stop() took {}ms", (newTime - startTime) / 1.0e6);
-      startTime = newTime;
-      writeModel.stop();
-      newTime = System.nanoTime();
-      log.info("writeModel.stop() took {}ms", (newTime - startTime) / 1.0e6);
+      log.info("writeModel.awaitTermination() took " + (newTime - startTime) / 1.0e6 + "ms");
       TopicModel tmpModel = writeModel;
       writeModel = readModel;
       readModel = tmpModel;
+      writeModel.reset();
     } catch (InterruptedException e) {
       log.error("Interrupted shutting down!", e);
     }
@@ -260,7 +257,7 @@ public class ModelTrainer {
     readModel.persist(outputPath, true);
   }
 
-  private static final class TrainerRunnable implements Runnable, Callable<Double> {
+  private static class TrainerRunnable implements Runnable, Callable<Double> {
     private final TopicModel readModel;
     private final TopicModel writeModel;
     private final Vector document;
@@ -280,11 +277,11 @@ public class ModelTrainer {
 
     @Override
     public void run() {
-      for (int i = 0; i < numDocTopicIters; i++) {
+      for(int i = 0; i < numDocTopicIters; i++) {
         // synchronous read-only call:
         readModel.trainDocTopicModel(document, docTopics, docTopicModel);
       }
-      if (writeModel != null) {
+      if(writeModel != null) {
         // parallel call which is read-only on the docTopicModel, and write-only on the writeModel
         // this method does not return until all rows of the docTopicModel have been submitted
         // to write work queues
