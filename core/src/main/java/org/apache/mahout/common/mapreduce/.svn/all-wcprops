@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/mapreduce
+END
+MergeVectorsReducer.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/mapreduce/MergeVectorsReducer.java
+END
+VectorSumReducer.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/mapreduce/VectorSumReducer.java
+END
+TransposeMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/mapreduce/TransposeMapper.java
+END
+MergeVectorsCombiner.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/mapreduce/MergeVectorsCombiner.java
+END

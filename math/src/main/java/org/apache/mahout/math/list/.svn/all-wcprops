@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/list
+END
+AbstractList.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/list/AbstractList.java
+END
+ObjectArrayList.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/list/ObjectArrayList.java
+END
+SimpleLongArrayList.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/list/SimpleLongArrayList.java
+END
+package-info.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/list/package-info.java
+END
+AbstractObjectList.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/list/AbstractObjectList.java
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java-templates/org/apache/mahout/math/function
+END
+ObjectValueTypeProcedure.java.t
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java-templates/org/apache/mahout/math/function/ObjectValueTypeProcedure.java.t
+END
+KeyTypeValueTypeProcedure.java.t
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java-templates/org/apache/mahout/math/function/KeyTypeValueTypeProcedure.java.t
+END
+KeyTypeProcedure.java.t
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java-templates/org/apache/mahout/math/function/KeyTypeProcedure.java.t
+END
+ValueTypeComparator.java.t
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java-templates/org/apache/mahout/math/function/ValueTypeComparator.java.t
+END
+KeyTypeObjectProcedure.java.t
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java-templates/org/apache/mahout/math/function/KeyTypeObjectProcedure.java.t
+END

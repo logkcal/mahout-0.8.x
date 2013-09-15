@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources
+END
+iris.csv
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources/iris.csv
+END
+word-list.txt
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources/word-list.txt
+END
+cancer.csv
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources/cancer.csv
+END
+retail.dat
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources/retail.dat
+END
+sgd.csv
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources/sgd.csv
+END
+FPGsynth.dat
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources/FPGsynth.dat
+END
+retail_results_with_min_sup_100.dat
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/resources/retail_results_with_min_sup_100.dat
+END

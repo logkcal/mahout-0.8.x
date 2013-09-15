@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/hadoop/similarity
+END
+VectorDistanceSimilarityJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/hadoop/similarity/VectorDistanceSimilarityJob.java
+END
+SeedVectorUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/hadoop/similarity/SeedVectorUtil.java
+END
+VectorDistanceMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/hadoop/similarity/VectorDistanceMapper.java
+END
+VectorDistanceInvertedMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/hadoop/similarity/VectorDistanceInvertedMapper.java
+END

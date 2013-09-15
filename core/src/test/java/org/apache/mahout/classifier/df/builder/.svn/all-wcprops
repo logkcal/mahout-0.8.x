@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/df/builder
+END
+InfiniteRecursionTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/df/builder/InfiniteRecursionTest.java
+END
+DecisionTreeBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/df/builder/DecisionTreeBuilderTest.java
+END
+DefaultTreeBuilderTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/df/builder/DefaultTreeBuilderTest.java
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/text/doc
+END
+MultipleFieldsDocument.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/text/doc/MultipleFieldsDocument.java
+END
+SingleFieldDocument.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/text/doc/SingleFieldDocument.java
+END
+NumericFieldDocument.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/text/doc/NumericFieldDocument.java
+END
+UnstoredFieldsDocument.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/text/doc/UnstoredFieldsDocument.java
+END

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood
+END
+HashedVector.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood/HashedVector.java
+END
+FastProjectionSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood/FastProjectionSearch.java
+END
+ProjectionSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood/ProjectionSearch.java
+END
+LocalitySensitiveHashSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood/LocalitySensitiveHashSearch.java
+END
+BruteSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood/BruteSearch.java
+END
+Searcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood/Searcher.java
+END
+UpdatableSearcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/math/neighborhood/UpdatableSearcher.java
+END

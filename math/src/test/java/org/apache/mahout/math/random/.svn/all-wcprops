@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random
+END
+MultiNormalTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random/MultiNormalTest.java
+END
+EmpiricalTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random/EmpiricalTest.java
+END
+ChineseRestaurantTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random/ChineseRestaurantTest.java
+END
+NormalTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random/NormalTest.java
+END
+MultinomialTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random/MultinomialTest.java
+END
+IndianBuffetTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random/IndianBuffetTest.java
+END
+PoissonSamplerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/test/java/org/apache/mahout/math/random/PoissonSamplerTest.java
+END

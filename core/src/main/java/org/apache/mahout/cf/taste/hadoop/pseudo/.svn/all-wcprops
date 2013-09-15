@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/cf/taste/hadoop/pseudo
+END
+ReducerMetrics.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/cf/taste/hadoop/pseudo/ReducerMetrics.java
+END
+UserIDsMapper.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/cf/taste/hadoop/pseudo/UserIDsMapper.java
+END
+RecommenderReducer.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/cf/taste/hadoop/pseudo/RecommenderReducer.java
+END
+RecommenderJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/cf/taste/hadoop/pseudo/RecommenderJob.java
+END

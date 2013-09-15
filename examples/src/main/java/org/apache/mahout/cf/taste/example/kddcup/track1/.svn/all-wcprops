@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1
+END
+Track1Runner.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1/Track1Runner.java
+END
+EstimateConverter.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1/EstimateConverter.java
+END
+Track1RecommenderEvaluatorRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1/Track1RecommenderEvaluatorRunner.java
+END
+Track1Callable.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1/Track1Callable.java
+END
+Track1Recommender.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1/Track1Recommender.java
+END
+Track1RecommenderEvaluator.java
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1/Track1RecommenderEvaluator.java
+END
+Track1RecommenderBuilder.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/kddcup/track1/Track1RecommenderBuilder.java
+END

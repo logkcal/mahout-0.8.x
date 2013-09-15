@@ -1,0 +1,209 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf
+END
+seqdirectory.props
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/seqdirectory.props
+END
+meanshift.props
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/meanshift.props
+END
+ssvd.props
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/ssvd.props
+END
+arff.vector.props
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/arff.vector.props
+END
+clusterpp.props
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/clusterpp.props
+END
+rowid.props
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/rowid.props
+END
+fkmeans.props
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/fkmeans.props
+END
+recommenditembased.props
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/recommenditembased.props
+END
+vectordump.props
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/vectordump.props
+END
+seq2sparse.props
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/seq2sparse.props
+END
+canopy.props
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/canopy.props
+END
+parallelALS.props
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/parallelALS.props
+END
+splitDataset.props
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/splitDataset.props
+END
+runlogistic.props
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/runlogistic.props
+END
+evaluateFactorization.props
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/evaluateFactorization.props
+END
+seqdumper.props
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/seqdumper.props
+END
+itemsimilarity.props
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/itemsimilarity.props
+END
+matrixmult.props
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/matrixmult.props
+END
+driver.classes.default.props
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/driver.classes.default.props
+END
+trainlogistic.props
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/trainlogistic.props
+END
+predictFromFactorization.props
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/predictFromFactorization.props
+END
+fpg.props
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/fpg.props
+END
+transpose.props
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/transpose.props
+END
+rowsimilarity.props
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/rowsimilarity.props
+END
+kmeans.props
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/kmeans.props
+END
+evaluateFactorizationParallel.props
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/evaluateFactorizationParallel.props
+END
+recommendfactorized.props
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/recommendfactorized.props
+END
+svd.props
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/svd.props
+END
+cleansvd.props
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/cleansvd.props
+END
+cat.props
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/cat.props
+END
+clusterdump.props
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/clusterdump.props
+END
+dirichlet.props
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/dirichlet.props
+END
+seqwiki.props
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/seqwiki.props
+END
+lucene.vector.props
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/src/conf/lucene.vector.props
+END

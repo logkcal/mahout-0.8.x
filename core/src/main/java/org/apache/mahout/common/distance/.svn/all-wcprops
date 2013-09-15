@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance
+END
+EuclideanDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/EuclideanDistanceMeasure.java
+END
+TanimotoDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/TanimotoDistanceMeasure.java
+END
+WeightedEuclideanDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/WeightedEuclideanDistanceMeasure.java
+END
+ManhattanDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/ManhattanDistanceMeasure.java
+END
+MinkowskiDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/MinkowskiDistanceMeasure.java
+END
+WeightedManhattanDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/WeightedManhattanDistanceMeasure.java
+END
+MahalanobisDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/MahalanobisDistanceMeasure.java
+END
+SquaredEuclideanDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/SquaredEuclideanDistanceMeasure.java
+END
+DistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/DistanceMeasure.java
+END
+ChebyshevDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/ChebyshevDistanceMeasure.java
+END
+CosineDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/CosineDistanceMeasure.java
+END
+WeightedDistanceMeasure.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/main/java/org/apache/mahout/common/distance/WeightedDistanceMeasure.java
+END

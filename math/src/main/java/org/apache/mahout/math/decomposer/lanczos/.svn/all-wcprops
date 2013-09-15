@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/lanczos
+END
+LanczosSolver.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/lanczos/LanczosSolver.java
+END
+LanczosState.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/lanczos/LanczosState.java
+END

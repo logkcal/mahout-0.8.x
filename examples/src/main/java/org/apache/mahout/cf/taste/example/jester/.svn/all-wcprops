@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/jester
+END
+JesterRecommenderBuilder.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/jester/JesterRecommenderBuilder.java
+END
+JesterDataModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/jester/JesterDataModel.java
+END
+JesterRecommenderEvaluatorRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/jester/JesterRecommenderEvaluatorRunner.java
+END
+JesterRecommender.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/jester/JesterRecommender.java
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/cf/taste/example/jester/README
+END

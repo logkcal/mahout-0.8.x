@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/math/hadoop/decomposer
+END
+TestDistributedLanczosSolverCLI.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/math/hadoop/decomposer/TestDistributedLanczosSolverCLI.java
+END
+TestDistributedLanczosSolver.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/math/hadoop/decomposer/TestDistributedLanczosSolver.java
+END

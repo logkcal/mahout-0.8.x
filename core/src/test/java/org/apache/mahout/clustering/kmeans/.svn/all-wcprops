@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/clustering/kmeans
+END
+TestEigenSeedGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/clustering/kmeans/TestEigenSeedGenerator.java
+END
+TestRandomSeedGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/clustering/kmeans/TestRandomSeedGenerator.java
+END
+TestKmeansClustering.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/clustering/kmeans/TestKmeansClustering.java
+END

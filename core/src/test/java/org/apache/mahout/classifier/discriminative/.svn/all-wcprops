@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/discriminative
+END
+PerceptronTrainerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/discriminative/PerceptronTrainerTest.java
+END
+WinnowTrainerTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/discriminative/WinnowTrainerTest.java
+END
+LinearModelTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/discriminative/LinearModelTest.java
+END

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools
+END
+MahoutCleanUp.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/MahoutCleanUp.xml
+END
+Eclipse-Lucene-Codestyle.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/Eclipse-Lucene-Codestyle.xml
+END
+apache-header.txt
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/apache-header.txt
+END
+codetemplates.xml
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/codetemplates.xml
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/pom.xml
+END
+template.checkstyle-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/template.checkstyle-config.xml
+END
+clover.license
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/clover.license
+END
+addcheckstyle.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/addcheckstyle.xsl
+END
+setup-eclipse-workspace.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/setup-eclipse-workspace.xml
+END
+xmltemplates.xml
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/buildtools/xmltemplates.xml
+END

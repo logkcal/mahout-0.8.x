@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/vectors/arff
+END
+ARFFModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/vectors/arff/ARFFModel.java
+END
+ARFFType.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/vectors/arff/ARFFType.java
+END
+MapBackedARFFModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/vectors/arff/MapBackedARFFModel.java
+END
+ARFFIterator.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/vectors/arff/ARFFIterator.java
+END
+ARFFVectorIterable.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/vectors/arff/ARFFVectorIterable.java
+END
+Driver.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/vectors/arff/Driver.java
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/naivebayes
+END
+NaiveBayesTestBase.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/naivebayes/NaiveBayesTestBase.java
+END
+NaiveBayesTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/naivebayes/NaiveBayesTest.java
+END
+NaiveBayesModelTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/naivebayes/NaiveBayesModelTest.java
+END
+ComplementaryNaiveBayesClassifierTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/naivebayes/ComplementaryNaiveBayesClassifierTest.java
+END
+StandardNaiveBayesClassifierTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/core/src/test/java/org/apache/mahout/classifier/naivebayes/StandardNaiveBayesClassifierTest.java
+END

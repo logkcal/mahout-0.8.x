@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random
+END
+Uniform.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/Uniform.java
+END
+Gamma.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/Gamma.java
+END
+AbstractDistribution.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/AbstractDistribution.java
+END
+AbstractContinousDistribution.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/AbstractContinousDistribution.java
+END
+AbstractDiscreteDistribution.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/AbstractDiscreteDistribution.java
+END
+Exponential.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/Exponential.java
+END
+Normal.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/Normal.java
+END
+Poisson.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/Poisson.java
+END
+NegativeBinomial.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/jet/random/NegativeBinomial.java
+END

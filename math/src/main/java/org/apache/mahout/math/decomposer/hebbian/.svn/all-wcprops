@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/hebbian
+END
+HebbianSolver.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/hebbian/HebbianSolver.java
+END
+EigenUpdater.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/hebbian/EigenUpdater.java
+END
+TrainingState.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/hebbian/TrainingState.java
+END
+HebbianUpdater.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/decomposer/hebbian/HebbianUpdater.java
+END

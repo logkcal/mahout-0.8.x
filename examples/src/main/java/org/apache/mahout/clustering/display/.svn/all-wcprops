@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display
+END
+DisplayCanopy.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplayCanopy.java
+END
+DisplaySpectralKMeans.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplaySpectralKMeans.java
+END
+DisplayKMeans.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplayKMeans.java
+END
+DisplayMeanShift.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplayMeanShift.java
+END
+DisplayClustering.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplayClustering.java
+END
+ClustersFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/ClustersFilter.java
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/README.txt
+END
+DisplayFuzzyKMeans.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplayFuzzyKMeans.java
+END
+DisplayDirichlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplayDirichlet.java
+END
+DisplayMinHash.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/main/java/org/apache/mahout/clustering/display/DisplayMinHash.java
+END

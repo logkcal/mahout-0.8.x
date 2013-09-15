@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils
+END
+TestConcatenateVectorsJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/TestConcatenateVectorsJob.java
+END
+MahoutTestCase.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/MahoutTestCase.java
+END
+Bump125Test.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/Bump125Test.java
+END
+SplitInputTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/SplitInputTest.java
+END

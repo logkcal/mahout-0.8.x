@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin
+END
+build-reuters.sh
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/build-reuters.sh
+END
+build-cluster-syntheticcontrol.sh
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/build-cluster-syntheticcontrol.sh
+END
+cluster-reuters.sh
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/cluster-reuters.sh
+END
+classify-20newsgroups.sh
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/classify-20newsgroups.sh
+END
+asf-email-examples.sh
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/asf-email-examples.sh
+END
+cluster-syntheticcontrol.sh
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/cluster-syntheticcontrol.sh
+END
+build-asf-email.sh
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/build-asf-email.sh
+END
+lda.algorithm
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/lda.algorithm
+END
+factorize-netflix.sh
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/factorize-netflix.sh
+END
+factorize-movielens-1M.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/factorize-movielens-1M.sh
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/bin/README.txt
+END

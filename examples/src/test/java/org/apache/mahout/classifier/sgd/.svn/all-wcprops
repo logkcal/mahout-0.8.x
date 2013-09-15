@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/test/java/org/apache/mahout/classifier/sgd
+END
+ModelDissectorTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/test/java/org/apache/mahout/classifier/sgd/ModelDissectorTest.java
+END
+LogisticModelParametersTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/test/java/org/apache/mahout/classifier/sgd/LogisticModelParametersTest.java
+END
+TrainLogisticTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/examples/src/test/java/org/apache/mahout/classifier/sgd/TrainLogisticTest.java
+END

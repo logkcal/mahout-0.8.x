@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/cf/taste/impl/similarity/jdbc
+END
+SQL92JDBCInMemoryItemSimilarity.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/cf/taste/impl/similarity/jdbc/SQL92JDBCInMemoryItemSimilarity.java
+END
+SQL92JDBCItemSimilarity.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/cf/taste/impl/similarity/jdbc/SQL92JDBCItemSimilarity.java
+END
+AbstractJDBCInMemoryItemSimilarity.java
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/cf/taste/impl/similarity/jdbc/AbstractJDBCInMemoryItemSimilarity.java
+END
+AbstractJDBCItemSimilarity.java
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/cf/taste/impl/similarity/jdbc/AbstractJDBCItemSimilarity.java
+END
+MySQLJDBCInMemoryItemSimilarity.java
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/cf/taste/impl/similarity/jdbc/MySQLJDBCInMemoryItemSimilarity.java
+END
+MySQLJDBCItemSimilarity.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/cf/taste/impl/similarity/jdbc/MySQLJDBCItemSimilarity.java
+END

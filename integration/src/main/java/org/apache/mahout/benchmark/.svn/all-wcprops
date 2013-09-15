@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark
+END
+ClosestCentroidBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/ClosestCentroidBenchmark.java
+END
+VectorBenchmarks.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/VectorBenchmarks.java
+END
+DotBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/DotBenchmark.java
+END
+BenchmarkRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/BenchmarkRunner.java
+END
+DistanceBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/DistanceBenchmark.java
+END
+MinusBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/MinusBenchmark.java
+END
+SerializationBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/SerializationBenchmark.java
+END
+CloneBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/CloneBenchmark.java
+END
+TimesBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/TimesBenchmark.java
+END
+PlusBenchmark.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/benchmark/PlusBenchmark.java
+END

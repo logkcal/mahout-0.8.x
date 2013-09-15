@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random
+END
+MultiNormal.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/MultiNormal.java
+END
+Sampler.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/Sampler.java
+END
+Empirical.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/Empirical.java
+END
+ChineseRestaurant.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/ChineseRestaurant.java
+END
+Normal.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/Normal.java
+END
+Missing.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/Missing.java
+END
+Multinomial.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/Multinomial.java
+END
+WeightedThing.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/WeightedThing.java
+END
+AbstractSamplerFunction.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/AbstractSamplerFunction.java
+END
+IndianBuffet.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/IndianBuffet.java
+END
+PoissonSampler.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/math/src/main/java/org/apache/mahout/math/random/PoissonSampler.java
+END

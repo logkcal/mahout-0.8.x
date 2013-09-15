@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/clustering
+END
+AbstractClusterWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/clustering/AbstractClusterWriter.java
+END
+GraphMLClusterWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/clustering/GraphMLClusterWriter.java
+END
+CSVClusterWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/clustering/CSVClusterWriter.java
+END
+ClusterDumperWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/clustering/ClusterDumperWriter.java
+END
+ClusterDumper.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/clustering/ClusterDumper.java
+END
+ClusterWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/main/java/org/apache/mahout/utils/clustering/ClusterWriter.java
+END

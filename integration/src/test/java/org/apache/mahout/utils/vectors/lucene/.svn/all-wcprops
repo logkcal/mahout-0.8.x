@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/vectors/lucene
+END
+LuceneIterableTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/vectors/lucene/LuceneIterableTest.java
+END
+CachedTermInfoTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/vectors/lucene/CachedTermInfoTest.java
+END
+DriverTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/asf/!svn/ver/1500564/mahout/tags/mahout-0.8/integration/src/test/java/org/apache/mahout/utils/vectors/lucene/DriverTest.java
+END
